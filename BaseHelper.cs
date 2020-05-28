@@ -4,33 +4,71 @@ using System.Linq;
 using System.Web;
 using System.Data.SqlClient;
 using System.Data;
+using System.Configuration;
 
 namespace MvcPlantilla
 {
     public class BaseHelper
     {
-        public static int ejecutarsentencia (string sentencia,
-                                        CommandType tipo,
-            List<SqlParameter> parametros = null)
+        public static int ejecutarSentencia(String sentencia,
+                           CommandType tipo,
+                           List<SqlParameter> parametros = null)
         {
-
-           SqlConnection cnn = new SqlConnection();
+            SqlConnection con = new SqlConnection();
             SqlCommand comando = new SqlCommand();
-
-            try 
-	{	        
-		cnn.ConnectionString = "data source=SALA3-E37\SQLEXPRESS;user id=sa;password=Express;initial catalog=CUENTAS";
-                cnn.Open();
-                comando.Connection = cnn;
+            int filas;
+            try
+            {
+                con.ConnectionString = ConfigurationManager.ConnectionStrings["cnn"].ConnectionString;
+                con.Open();
+                comando.Connection = con;
                 comando.CommandType = tipo;
-                comando.CommandText = "INSERT INTO Video VALUES (idVideo,titulo,repro,url)"
-	}
-	catch (Exception)
-	{
-		
-		throw;
-	}
+                comando.CommandText = sentencia;
 
-        
-    }
+                if (parametros != null)
+                {
+                    comando.Parameters.AddRange(parametros.ToArray());
+                }
+
+                filas = comando.ExecuteNonQuery();
+            } //try
+            catch (Exception) { throw; }
+            finally
+            {
+                con.Close();
+            } //finally	
+            return filas;
+        } // funcion ejecutar sentencia  
+
+        public static DataTable ejecutarConsulta(String sentencia,
+                             CommandType tipo,
+                             List<SqlParameter> parametros = null)
+        {
+            SqlConnection con = new SqlConnection();
+            SqlCommand comando = new SqlCommand();
+            SqlDataAdapter adaptador = new SqlDataAdapter();
+            DataTable datos = new DataTable();
+            try
+            {
+                con.ConnectionString = ConfigurationManager.ConnectionStrings["cnn"].ConnectionString;
+                con.Open();
+                comando.Connection = con;
+                comando.CommandType = tipo;
+                comando.CommandText = sentencia;
+                adaptador.SelectCommand = comando;
+                if (parametros != null)
+                {
+                    comando.Parameters.AddRange(parametros.ToArray());
+                }
+
+                adaptador.Fill(datos);
+            } //try
+            catch (Exception) { throw; }
+            finally
+            {
+                con.Close();
+            } //finally	
+            return datos;
+        } //ejecutarSentencia
+    } //clase basehelper
 }
