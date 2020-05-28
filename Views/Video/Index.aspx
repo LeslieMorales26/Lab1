@@ -7,21 +7,16 @@
     <title>Index</title>
 </head>
 <body>
-    <h2>Lista de video   
-    </h2>
+    <h3>Lista de videos   
+    </h3>
    
 <br />
-   Hay <%: ((System.Data.DataTable)ViewData["video"]).Rows.Count %> Videos
+   Hay <%: ((System.Data.DataTable)ViewData["Video"]).Rows.Count %> Videos
     <br />
     <%
-        //sirve para buscar en cada trenglon en la base de datos
-        foreach (System.Data.DataRow ren in ((System.Data.DataTable)ViewData["video"]).Rows)
+        foreach (System.Data.DataRow ren in ((System.Data.DataTable)ViewData["Video"]).Rows)
         {%>
             
-            <p> <%: ren["titulo"].ToString() %>  </p>
-             <iframe width="560" height="315" src="<%: ren["url"].ToString() %>"frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             
-    <%  }
-    %>
 </body>
 </html>

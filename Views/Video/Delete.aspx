@@ -4,7 +4,14 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" >
 <head runat="server">
-    <title>Delete</title>
+     <title>Eliminar registro</title>
+  <meta charset="UTF-8">
+  <meta name="description" content="CRUD Video ASP.NET MVC 2.0">
+  <meta name="keywords" content="ASP.NET,MVC,Facpya">
+  <meta name="author" content="LESLIE ARIDAY MORALES DE LA GARZA">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../../Content/Site.css" rel="stylesheet" type="text/css" />
+
 </head>
 <body>
    <form action="/Video/Delete" method="post">

@@ -4,12 +4,18 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" >
 <head runat="server">
-    <title>Create</title>
+   <title>Registro </title>
+  <meta charset="UTF-8">
+  <meta name="description" content="CRUD Video ASP.NET MVC 2.0">
+  <meta name="keywords" content="ASP.NET,MVC,Facpya">
+  <meta name="author" content="LESLIE ARIDAY MORALES DE LA GARZA">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../../Content/Site.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <form action="/Video/Create" method="post">
     <fieldset>
-    <legend>informacion del Video</legend>
+    <legend>Informacion del Video</legend>
 
     <label for="idVideo">idVideo</label>
     <input type="text" name="idVideo"/>

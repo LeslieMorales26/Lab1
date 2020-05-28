@@ -16,7 +16,7 @@ namespace MvcPlantilla.Controllers
 
         public ActionResult Index()
         {
-            ViewData["video"] = BaseHelper.ejecutarConsulta("Select * from video", CommandType.Text);
+            ViewData["Video"] = BaseHelper.ejecutarConsulta("sp_Video_ConsultarTodo", CommandType.StoredProcedure);
             return View();
         }
         public ActionResult Create()
@@ -32,8 +32,8 @@ namespace MvcPlantilla.Controllers
             parametros.Add(new SqlParameter("@repro", repro));
             parametros.Add(new SqlParameter("@url", url));
 
-            BaseHelper.ejecutarSentencia("INSERT INTO video VALUES (@idVideo,@titulo,@repro,@url)",
-                                        CommandType.Text,
+            BaseHelper.ejecutarSentencia("sp_Video_Insertar",
+                                        CommandType.StoredProcedure,
                                          parametros);
 
             return RedirectToAction("Index", "Video");
@@ -46,13 +46,14 @@ namespace MvcPlantilla.Controllers
         [HttpPost]
         public ActionResult Edit(string titulo, int repro, string url, int idVideo)
         {
+            string sentencia = "sp_Video_Actualizar";
             List<SqlParameter> parametros = new List<SqlParameter>();
             parametros.Add(new SqlParameter("@titulo", titulo));
             parametros.Add(new SqlParameter("@repro", repro));
             parametros.Add(new SqlParameter("@url", url));
             parametros.Add(new SqlParameter("@idVideo", idVideo));
 
-            BaseHelper.ejecutarSentencia("UPDATE video SET titulo = @titulo, repro = @repro, url = @url WHERE idVideo = @idVideo", CommandType.Text, parametros);
+            BaseHelper.ejecutarSentencia(sentencia, CommandType.StoredProcedure, parametros);
             return RedirectToAction("Index", "Video");
         }
         //Eliminar video
@@ -67,7 +68,7 @@ namespace MvcPlantilla.Controllers
             List<SqlParameter> parametros = new List<SqlParameter>();
             parametros.Add(new SqlParameter("@idVideo", idVideo));
 
-            BaseHelper.ejecutarSentencia("Delete from Video WHERE idVideo = @idVideo", CommandType.Text, parametros);
+            BaseHelper.ejecutarSentencia("sp_Video_Eliminar", CommandType.StoredProcedure, parametros);
             return RedirectToAction("Index", "Video");
         }
     }
